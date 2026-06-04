@@ -38,19 +38,29 @@ def load_data():
 st.title("📊 2025-2026 조직형태별 축제수 비교")
 st.markdown("두 개의 테이블(`2025`, `2026`) 데이터를 합쳐서 비교 분석합니다.")
 
-df = load_data()
+df = pd.read_sql_query(query, conn)
 
-if df is not None:
-    # 3. 차트를 위한 데이터 가공 (Pivoting)
-    # st.bar_chart는 '인덱스'가 X축 이름이 되고, '컬럼'이 막대가 됩니다.
-    # 우리는 '조직형태'를 옆으로 나열하고, '연도'별로 막대를 세울 거예요.
-    chart_data = df.pivot(index='조직형태', columns='연도', values='축제수')
+import matplotlib.pyplot as plt
+import numpy as np
 
-    # 4. 차트 출력 (이중 막대 차트)
-    st.subheader("조직형태별 축제수 이중 막대 차트")
-    st.bar_chart(chart_data)
+chart_data = df.pivot(index='조직형태', columns='연도', values='축제수')
 
-    # 5. 데이터 표 출력 (선택 사항)
-    with st.expander("상세 데이터 보기"):
-        st.write("표 형식 데이터:")
-        st.dataframe(chart_data, use_container_width=True)
+labels = chart_data.index
+y2025 = chart_data[2025]
+y2026 = chart_data[2026]
+
+x = np.arange(len(labels))
+width = 0.35
+
+fig, ax = plt.subplots(figsize=(10, 5))
+
+ax.bar(x - width/2, y2025, width, label='2025', color='#B0BEC5')
+ax.bar(x + width/2, y2026, width, label='2026', color='#1565C0')
+
+ax.set_xticks(x)
+ax.set_xticklabels(labels, rotation=45)
+ax.set_ylabel('축제 수')
+ax.set_title('조직형태별 축제 수 비교')
+ax.legend()
+
+st.pyplot(fig)
