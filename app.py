@@ -51,7 +51,7 @@ if df is not None:
 chart_data['total'] = chart_data.sum(axis=1) # 합계 컬럼 임시 생성
 chart_data = chart_data.sort_values(by='total', ascending=False) # 내림차순 정렬
 chart_data = chart_data.drop(columns=['total']) # 차트에는 합계가 나오면 안 되므로 삭제
-# ----------------------
+
 
 # 4. 차트 출력 (이중 막대 차트, stack=False 필수)
 st.subheader("조직형태별 축제수 이중 막대 차트")
