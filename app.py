@@ -46,22 +46,9 @@ if df is not None:
     # 우리는 '조직형태'를 옆으로 나열하고, '연도'별로 막대를 세울 거예요.
     chart_data = df.pivot(index='조직형태', columns='연도', values='축제수')
 
-# 3. 차트를 위한 데이터 가공 (Pivoting)
-chart_data = df.pivot(index='조직형태', columns='연도', values='축제수')
-
-# 2025년과 2026년의 합계(또는 특정 연도)를 기준으로 내림차순 정렬합니다.
-# '조직형태'별로 전체 수치가 큰 순서대로 나열하기 위함입니다.
-chart_data['total'] = chart_data.sum(axis=1) # 합계 컬럼 임시 생성
-chart_data = chart_data.sort_values(by='total', ascending=False) # 내림차순 정렬
-chart_data = chart_data.drop(columns=['total']) # 차트에는 합계가 나오면 안 되므로 삭제
-
-
-# 4. 차트 출력 (이중 막대 차트, stack=False 필수)
-st.subheader("조직형태별 축제수 이중 막대 차트")
-st.bar_chart(chart_data, stack=False)
     # 4. 차트 출력 (이중 막대 차트)
     st.subheader("조직형태별 축제수 이중 막대 차트")
-    st.bar_chart(chart_data, stack=False)
+    st.bar_chart(chart_data, stack=False))
 
     # 5. 데이터 표 출력 (선택 사항)
     with st.expander("상세 데이터 보기"):
