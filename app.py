@@ -48,7 +48,7 @@ if df is not None:
 
     # 4. 차트 출력 (이중 막대 차트)
     st.subheader("조직형태별 축제수 이중 막대 차트")
-    st.bar_chart(chart_data)
+    st.bar_chart(chart_data, stack=False)
 
     # 5. 데이터 표 출력 (선택 사항)
     with st.expander("상세 데이터 보기"):
